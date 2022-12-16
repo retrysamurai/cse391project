@@ -1,0 +1,279 @@
+@import url("https://fonts.googleapis.com/css2?family=Courgette&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  color: white;
+}
+
+:root {
+  --primary: rgb(61, 61, 61);
+  --secondary: rgb(175, 50, 50);
+  --tertiary: rgb(27, 27, 27);
+}
+
+body,
+form,
+#root,
+.container,
+nav,
+nav .btns,
+.container .links,
+.container .welcome,
+.container .main-panel,
+.container .main-panel .sidebar,
+.container .main-panel .forms,
+.req-form,
+.req-form .title,
+.users,
+.card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#root {
+  width: inherit;
+  height: inherit;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--tertiary);
+}
+
+.container,
+form {
+  flex-direction: column;
+}
+
+button {
+  padding: 10px;
+  background-color: var(--tertiary);
+  border: none;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="email"],
+input[type="password"] {
+  margin: 10px 0;
+  width: 250px;
+  height: 30px;
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 3px;
+  outline: 2px solid white;
+  outline-offset: 2px;
+  font-size: 1.05rem;
+}
+
+input[type="date"] {
+  width: auto;
+}
+
+select {
+  width: auto;
+  height: 35px;
+  background-color: var(--tertiary);
+  border: none;
+  border-radius: 5px;
+}
+
+nav {
+  width: 100%;
+  height: 6rem;
+  justify-content: space-between;
+  position: absolute;
+  top: 0;
+  border-bottom: 5px solid var(--tertiary);
+}
+
+nav .logo {
+  margin: 20px;
+  height: 90%;
+  aspect-ratio: 1/1;
+  background-color: #fff;
+  border-radius: 50%;
+}
+
+nav .btns {
+  padding: 20px;
+  width: 35%;
+  justify-content: flex-end;
+  gap: 20px;
+  font-size: 1.2rem;
+}
+
+.container {
+  width: 95%;
+  height: 95%;
+  background-color: var(--primary);
+  border-radius: 20px;
+  position: relative;
+}
+
+.container form .dob {
+  margin: 0;
+  padding: 0;
+  width: 250px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container .links {
+  margin: 20px;
+  gap: 20px;
+}
+
+.container .welcome {
+  flex-direction: column;
+}
+
+.container .main-panel {
+  width: 100%;
+  position: absolute;
+  top: 6rem;
+  bottom: 0;
+}
+
+.container .main-panel .sidebar {
+  /* width: 500px; */
+  padding: 30px;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-image: linear-gradient(to bottom, var(--primary), var(--tertiary));
+  border-right: 5px solid var(--tertiary);
+  border-bottom-left-radius: 20px;
+}
+
+.container .main-panel .sidebar .image {
+  margin: 10px;
+  width: 250px;
+  aspect-ratio: 1/1;
+  background-image: linear-gradient(
+    to right,
+    rgb(187, 52, 52),
+    rgb(185, 58, 96)
+  );
+  border-radius: 50%;
+}
+
+.container .main-panel .sidebar form {
+  margin: 20px;
+  padding: 10px;
+  gap: 20px;
+  background-color: var(--primary);
+  border-radius: 10px;
+  position: absolute;
+  bottom: 0;
+}
+
+.container .main-panel .forms {
+  width: 100%;
+  height: 100%;
+  justify-content: flex-start;
+  overflow: hidden;
+  background-image: linear-gradient(to bottom, var(--primary), var(--tertiary));
+  border-bottom-right-radius: 20px;
+}
+
+.container .welcome {
+  font-size: 3rem;
+}
+
+.req-form {
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.req-form form {
+  margin: 20px;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.req-form .title {
+  padding: 20px 0;
+  width: 530px;
+  background-color: var(--tertiary);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  font-size: 3rem;
+  font-weight: 300;
+}
+
+.req-form .title .blood {
+  margin: 0;
+  margin-left: 10px;
+  padding: 0;
+  font-family: "Courgette", cursive;
+}
+
+.req-form .title span img {
+  width: 21px;
+}
+
+.users {
+  margin: 0;
+  margin-right: 20px;
+  padding: 0 20px;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 20px;
+  border-radius: 10px;
+  overflow-y: scroll;
+  scrollbar-gutter: 20px;
+}
+
+.users::-webkit-scrollbar {
+  width: 10px;
+}
+
+.users::-webkit-scrollbar-thumb {
+  background-color: rgb(160, 160, 160);
+  border-radius: 5px;
+}
+
+.users::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 5px;
+}
+
+.card {
+  padding: 50px;
+  width: 500px;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: var(--secondary);
+  background-image: linear-gradient(
+    to right,
+    rgb(187, 52, 52),
+    rgb(185, 58, 96)
+  );
+  border-radius: 20px;
+}
+
+.card button {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: rgb(23, 202, 178);
+  color: black;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
