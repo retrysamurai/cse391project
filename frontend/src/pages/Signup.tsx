@@ -4,9 +4,9 @@ const URL = "http://127.0.0.1:4400/users/create";
 export function Signup() {
   const nameRef = useRef<HTMLInputElement>(null);
   const phoneRef = useRef<HTMLInputElement>(null);
-  const genderRef = useRef<HTMLInputElement>(null);
+  const genderRef = useRef<HTMLSelectElement>(null);
   const dobRef = useRef<HTMLInputElement>(null);
-  const bloodGroupRef = useRef<HTMLInputElement>(null);
+  const bloodGroupRef = useRef<HTMLSelectElement>(null);
   const areaRef = useRef<HTMLInputElement>(null);
   const addressRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -15,7 +15,6 @@ export function Signup() {
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    // console.log(input);
     fetch(URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -43,18 +42,47 @@ export function Signup() {
   return (
     <div className="container">
       <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Full Name" ref={nameRef} />
-        <input type="text" placeholder="Phone No." ref={phoneRef} />
-        <input type="text" placeholder="Gender" ref={genderRef} />
-        <span className="dob">
-          Date of Birth{" "}
-          <input type="date" placeholder="Date of Birth" ref={dobRef} />
+        <input type="text" placeholder="Full Name" ref={nameRef} required />
+        <input type="text" placeholder="Phone No." ref={phoneRef} required />
+        <span className="spans">
+          Gender{" "}
+          <select ref={genderRef} required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
         </span>
-        <input type="text" placeholder="Blood Group" ref={bloodGroupRef} />
-        <input type="text" placeholder="Area" ref={areaRef} />
-        <input type="text" placeholder="Address" ref={addressRef} />
-        <input type="email" placeholder="Email" ref={emailRef} />
-        <input type="password" placeholder="Password" ref={passwordRef} />
+        <span className="spans">
+          Date of Birth{" "}
+          <input
+            type="date"
+            placeholder="Date of Birth"
+            ref={dobRef}
+            required
+          />
+        </span>
+        <span className="spans">
+          Blood Group{" "}
+          <select ref={bloodGroupRef} required>
+            <option value="A+ve">A +ve</option>
+            <option value="B+ve">B +ve</option>
+            <option value="O+ve">O +ve</option>
+            <option value="AB+ve">AB +ve</option>
+            <option value="A-ve">A -ve</option>
+            <option value="B-ve">B -ve</option>
+            <option value="O-ve">O -ve</option>
+            <option value="AB-ve">AB -ve</option>
+          </select>
+        </span>
+        <input type="text" placeholder="Area" ref={areaRef} required />
+        <input type="text" placeholder="Address" ref={addressRef} required />
+        <input type="email" placeholder="Email" ref={emailRef} required />
+        <input
+          type="password"
+          placeholder="Password"
+          ref={passwordRef}
+          required
+        />
         <button type="submit">Signup</button>
       </form>
       <div className="links">

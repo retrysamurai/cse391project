@@ -122,13 +122,26 @@ nav .btns {
   position: relative;
 }
 
-.container form .dob {
+.container form .spans {
   margin: 0;
   padding: 0;
   width: 250px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.container form .spans select {
+  margin: 10px 0;
+  width: 125px;
+  background-color: white;
+  color: black;
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+.container form .spans option {
+  color: black;
 }
 
 .container .links {
@@ -165,7 +178,7 @@ nav .btns {
   background-image: linear-gradient(
     to right,
     rgb(187, 52, 52),
-    rgb(185, 58, 96)
+    rgb(185, 58, 75)
   );
   border-radius: 50%;
 }
@@ -262,7 +275,7 @@ nav .btns {
   background-image: linear-gradient(
     to right,
     rgb(187, 52, 52),
-    rgb(185, 58, 96)
+    rgb(185, 58, 75)
   );
   border-radius: 20px;
 }

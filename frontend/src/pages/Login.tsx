@@ -50,8 +50,8 @@ export function Login() {
   return !hasToken ? (
     <div className="container">
       <form onSubmit={handleSubmit}>
-        <input type="email" placeholder="Email" ref={emailRef} />
-        <input type="password" placeholder="Password" ref={passRef} />
+        <input type="email" placeholder="Email" ref={emailRef} required />
+        <input type="password" placeholder="Password" ref={passRef} required />
         <button type="submit">Login</button>
       </form>
       <div className="links">
