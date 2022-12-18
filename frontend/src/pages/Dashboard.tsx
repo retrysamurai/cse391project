@@ -71,7 +71,7 @@ export function Dashboard() {
     fetchDonates();
   }, []);
 
-  const processReq = (user: User) => {
+  const processReq = (user: User, index: number) => {
     fetch(REQ_POST_URL, {
       method: "POST",
       headers: {
@@ -85,10 +85,14 @@ export function Dashboard() {
         area: user.area,
         reqDate: new Date(),
       }),
+    }).then((response) => {
+      if (response.status === 201) {
+        setUserList(userList.filter((_, i) => i !== index));
+      }
     });
   };
 
-  const processDon = () => {
+  const processDon = (donateId: string) => {
     fetch(DON_UPDTE_URL, {
       method: "PATCH",
       headers: {
@@ -96,8 +100,13 @@ export function Dashboard() {
         Authorization: localStorage.getItem("token") as string,
       },
       body: JSON.stringify({
+        donateId: donateId,
         receiverId: localStorage.getItem("userId"),
       }),
+    }).then((response) => {
+      if (response.status === 201) {
+        setDonList(donList.filter((d) => d.donateId !== donateId));
+      }
     });
   };
 
@@ -115,7 +124,15 @@ export function Dashboard() {
         donationDate: new Date(),
         donationBank: donateRef.current?.value,
       }),
-    });
+    })
+      .then((response) => {
+        if (response.status === 201) {
+          return response.json();
+        }
+      })
+      .then((json) => {
+        setDonList([...donList, json.donateBlood]);
+      });
   };
 
   return hasToken ? (
@@ -136,7 +153,9 @@ export function Dashboard() {
                   <p>{data.bloodGroup}</p>
                   <p>{data.donationBank}</p>
                   <p>{data.donationDate}</p>
-                  <button onClick={() => processDon()}>RECEIVE</button>
+                  <button onClick={() => processDon(data.donateId)}>
+                    RECEIVE
+                  </button>
                 </div>
               ))}
           </div>
@@ -201,14 +220,14 @@ export function Dashboard() {
                 .filter(
                   (data) => data.userId !== localStorage.getItem("userId")
                 )
-                .map((data) => (
+                .map((data, i) => (
                   <div className="card" key={data._id}>
                     <p>Name: {data.name}</p>
                     <p>Blood Group: {data.bloodGroup}</p>
                     <p>Phone No.: {data.phone}</p>
                     <p>Area: {data.area}</p>
                     <p>Email: {data.email}</p>
-                    <button onClick={() => processReq(data)}>REQUEST</button>
+                    <button onClick={() => processReq(data, i)}>REQUEST</button>
                   </div>
                 ))}
             </div>

@@ -30,7 +30,7 @@ const readDonateBlood = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const readAll = (req: Request, res: Response, next: NextFunction) => {
-  return DonateBlood.find()
+  return DonateBlood.find({recieverId: null})
     .then((donateBloods) => res.status(201).json({ donateBloods }))
     .catch((error) => res.status(500).json({ error }));
 };
@@ -38,15 +38,16 @@ const readAll = (req: Request, res: Response, next: NextFunction) => {
 const updateDonateBlood = (req: Request, res: Response, next: NextFunction) => {
   const donateBloodId = (req as ReqWithJWT).USER_ID;
 
-  return DonateBlood.findById(donateBloodId)
+  return DonateBlood.findOneAndUpdate({ donateId: req.body.donateId }, { recieverId: donateBloodId })
     .then((donateBlood) => {
       if (donateBlood) {
-        donateBlood.set(req.body);
+        // donateBlood.recieverId = new mongoose.Types.ObjectId(donateBloodId);
 
-        return donateBlood
-          .save()
-          .then((donateBlood) => res.status(201).json({ donateBlood }))
-          .catch((error) => res.status(500).json({ error }));
+        // return donateBlood
+        //   .save()
+        //   .then((donateBlood) => res.status(201).json({ donateBlood }))
+        //   .catch((error) => res.status(500).json({ error }));
+        res.status(201).json({donateBlood});
       } else {
         res.status(404).json({ message: "DonateBlood Not Found" });
       }
