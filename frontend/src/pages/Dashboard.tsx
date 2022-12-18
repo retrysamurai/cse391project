@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 const USER_GET_URL = "http://127.0.0.1:4400/users/get";
+// const REQ_GET_URL = "http://127.0.0.1:4400/request/get";
 const REQ_POST_URL = "http://127.0.0.1:4400/request/create";
+const DON_GET_URL = "http://127.0.0.1:4400/donate/get";
 const DON_POST_URL = "http://127.0.0.1:4400/donate/create";
+const DON_UPDTE_URL = "http://127.0.0.1:4400/donate/update";
 import { Navbar } from "../components/Navbar";
 
 interface User {
@@ -17,6 +20,15 @@ interface User {
   __v: number;
 }
 
+interface Donate {
+  _id: string;
+  donateId: string;
+  receiverId: string;
+  bloodGroup: string;
+  donationDate: string;
+  donationBank: string;
+}
+
 export function Dashboard() {
   const bloodGroupRef = useRef<HTMLSelectElement>(null);
   const donateRef = useRef<HTMLSelectElement>(null);
@@ -26,6 +38,7 @@ export function Dashboard() {
   );
 
   const [userList, setUserList] = useState<User[]>([]);
+  const [donList, setDonList] = useState<Donate[]>([]);
 
   const fetchUsers = () => {
     const link = new URL(USER_GET_URL);
@@ -40,14 +53,22 @@ export function Dashboard() {
       .then((response) => response.json())
       .then((response) => {
         setUserList(response.users);
-        // console.log(response);
-        // console.log(userList);
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const fetchDonates = () => {
+    fetch(DON_GET_URL, { method: "GET" })
+      .then((response) => response.json())
+      .then((response) => {
+        setDonList(response.donateBloods);
       })
       .catch((err) => console.error(err));
   };
 
   useEffect(() => {
     fetchUsers();
+    fetchDonates();
   }, []);
 
   const processReq = (user: User) => {
@@ -61,8 +82,21 @@ export function Dashboard() {
         responderId: user.userId,
         reqBloodGroup: localStorage.getItem("bloodGroup"),
         resBloodGroup: user.bloodGroup,
-        arae: user.area,
+        area: user.area,
         reqDate: new Date(),
+      }),
+    });
+  };
+
+  const processDon = () => {
+    fetch(DON_UPDTE_URL, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token") as string,
+      },
+      body: JSON.stringify({
+        receiverId: localStorage.getItem("userId"),
       }),
     });
   };
@@ -77,7 +111,6 @@ export function Dashboard() {
         Authorization: localStorage.getItem("token") as string,
       },
       body: JSON.stringify({
-        donateId: localStorage.getItem(""),
         bloodGroup: localStorage.getItem("bloodGroup"),
         donationDate: new Date(),
         donationBank: donateRef.current?.value,
@@ -94,7 +127,19 @@ export function Dashboard() {
           <p>Welcome, {localStorage.getItem("name")}</p>
           <p>Blood Group: {localStorage.getItem("bloodGroup")}</p>
           <p>Last donated</p>
-          <div className="notification">Blood requested in nearby area</div>
+          <div className="requests">
+            {donList
+              .filter((data) => data.receiverId !== null)
+              .map((data) => (
+                <div className="card" key={data._id}>
+                  <p>{data.donateId}</p>
+                  <p>{data.bloodGroup}</p>
+                  <p>{data.donationBank}</p>
+                  <p>{data.donationDate}</p>
+                  <button onClick={() => processDon()}>RECEIVE</button>
+                </div>
+              ))}
+          </div>
           <form>
             <label>Donate to a Blood Bank</label>
             <select name="donate-bank" ref={donateRef}>
@@ -152,16 +197,20 @@ export function Dashboard() {
               </select>
             </form>
             <div className="users">
-              {userList.map((data) => (
-                <div className="card" key={data._id}>
-                  <p>Name: {data.name}</p>
-                  <p>Blood Group: {data.bloodGroup}</p>
-                  <p>Phone No.: {data.phone}</p>
-                  <p>Area: {data.area}</p>
-                  <p>Email: {data.email}</p>
-                  <button onClick={() => processReq(data)}>REQUEST</button>
-                </div>
-              ))}
+              {userList
+                .filter(
+                  (data) => data.userId !== localStorage.getItem("userId")
+                )
+                .map((data) => (
+                  <div className="card" key={data._id}>
+                    <p>Name: {data.name}</p>
+                    <p>Blood Group: {data.bloodGroup}</p>
+                    <p>Phone No.: {data.phone}</p>
+                    <p>Area: {data.area}</p>
+                    <p>Email: {data.email}</p>
+                    <button onClick={() => processReq(data)}>REQUEST</button>
+                  </div>
+                ))}
             </div>
           </div>
           <div className="donate-form"></div>

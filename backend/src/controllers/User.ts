@@ -101,6 +101,7 @@ export const login = async (req: Request, res: Response) => {
 
   res.status(200).send({
     token: `Bearer ${token}`,
+    userId: user._id,
     name: user.name,
     phone: user.phone,
     gender: user.gender,

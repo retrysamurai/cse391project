@@ -22,7 +22,7 @@ const createRequestBlood = (req: Request, res: Response, next: NextFunction) => 
 };
 
 const readRequestBlood = (req: Request, res: Response, next: NextFunction) => {
-  const requestBloodId = req.params.requestBloodId;
+  const requestBloodId = (req as ReqWithJWT).USER_ID;
 
   return RequestBlood.findById(requestBloodId)
     .then((requestBlood) => (requestBlood ? res.status(201).json({ requestBlood }) : res.status(404).json({ message: "RequestBlood Not Found" })))
@@ -36,7 +36,7 @@ const readAll = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const updateRequestBlood = (req: Request, res: Response, next: NextFunction) => {
-  const requestBloodId = req.params.requestBloodId;
+  const requestBloodId = (req as ReqWithJWT).USER_ID;
 
   return RequestBlood.findById(requestBloodId)
     .then((requestBlood) => {
@@ -55,7 +55,7 @@ const updateRequestBlood = (req: Request, res: Response, next: NextFunction) => 
 };
 
 const deleteRequestBlood = (req: Request, res: Response, next: NextFunction) => {
-  const requestBloodId = req.params.requestBloodId;
+  const requestBloodId = (req as ReqWithJWT).USER_ID;
 
   return RequestBlood.findByIdAndDelete(requestBloodId)
     .then((requestBlood) => (requestBlood ? res.status(201).json({ message: "RequestBlood Deleted" }) : res.status(404).json({ message: "RequestBlood Not Found" })))

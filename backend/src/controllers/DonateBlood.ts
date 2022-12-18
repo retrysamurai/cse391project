@@ -22,7 +22,7 @@ const createDonateBlood = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const readDonateBlood = (req: Request, res: Response, next: NextFunction) => {
-  const donateBloodId = req.params.donateBloodId;
+  const donateBloodId = (req as ReqWithJWT).USER_ID;
 
   return DonateBlood.findById(donateBloodId)
     .then((donateBlood) => (donateBlood ? res.status(201).json({ donateBlood }) : res.status(404).json({ message: "DonateBlood Not Found" })))
@@ -36,7 +36,7 @@ const readAll = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const updateDonateBlood = (req: Request, res: Response, next: NextFunction) => {
-  const donateBloodId = req.params.donateBloodId;
+  const donateBloodId = (req as ReqWithJWT).USER_ID;
 
   return DonateBlood.findById(donateBloodId)
     .then((donateBlood) => {
@@ -55,7 +55,7 @@ const updateDonateBlood = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const deleteDonateBlood = (req: Request, res: Response, next: NextFunction) => {
-  const donateBloodId = req.params.donateBloodId;
+  const donateBloodId = (req as ReqWithJWT).USER_ID;
 
   return DonateBlood.findByIdAndDelete(donateBloodId)
     .then((donateBlood) => (donateBlood ? res.status(201).json({ message: "DonateBlood Deleted" }) : res.status(404).json({ message: "DonateBlood Not Found" })))

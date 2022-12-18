@@ -32,6 +32,7 @@ export function Login() {
       .then((response) => {
         if (response.token) {
           localStorage.setItem("token", response.token);
+          localStorage.setItem("userId", response.userId);
           localStorage.setItem("name", response.name);
           localStorage.setItem("phone", response.phone);
           localStorage.setItem("gender", response.gender);
